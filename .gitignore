@@ -1,0 +1,34 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Env
+.env
+
+# Editor settings
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Coverage & testing
+coverage/
+.nyc_output/
+
+# GitHub Actions temporary files
+.github/workflows/*.log
+
+# Optional for macOS
+*.DS_Store
+
+# Optional for Windows
+*.lnk
