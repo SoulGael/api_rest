@@ -11,6 +11,5 @@ const userSchema = Joi.object({
 });
 
 router.get('/', getUsers);
-router.post('/', validate(userSchema), createUser);
 
 export default router;

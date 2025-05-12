@@ -10,14 +10,3 @@ export const getUsers = async (req, res, next) => {
     next(err);
   }
 };
-
-export const createUser = async (req, res, next) => {
-  try {
-    req.body.name = toCapitalCase(req.body.name);
-    req.body.email = req.body.email.toLowerCase().trim();
-    const newUser = await userService.createUser(req.body);
-    return res.status(201).json(success('User created', newUser.id));
-  } catch (err) {
-    next(err);
-  }
-};
