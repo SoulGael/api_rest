@@ -26,7 +26,6 @@ src/
 ├── services/         # Lógica de negocio
 ├── middlewares/      # Validaciones y errores
 ├── utils/            # Funciones reutilizables
-├── __tests__/        # Pruebas con Jest
 └── app.js            # Punto de entrada
 ```
 
@@ -70,25 +69,13 @@ npm start
 
 ---
 
-## 🧪 Ejecutar pruebas
+## 🧪 Ejecutar seed
 
 ```bash
-npm test
+node src/seed/seed-users.js
 ```
 
-Esto correrá los tests de `src/__tests__/` usando Jest y Supertest.
-
----
-
-## 🧪 GitHub Actions (CI)
-
-Este proyecto incluye un workflow que:
-
-- Instala dependencias
-- Corre pruebas automáticas
-- Verifica que el servidor funcione
-
-Puedes ver el archivo en `.github/workflows/nodejs.yml`.
+Esto creara datos de usuarios para pruebas.
 
 ---
 
@@ -97,17 +84,8 @@ Puedes ver el archivo en `.github/workflows/nodejs.yml`.
 | Método | Ruta           | Descripción               |
 |--------|----------------|---------------------------|
 | GET    | /api/users     | Listar usuarios           |
-| POST   | /api/users     | Crear nuevo usuario       |
 
-### Ejemplo `POST /api/users`
-
-```json
-{
-  "name": "Juan Pérez",
-  "email": "juan@example.com"
-}
-```
-
+Ej: http://localhost:3000/api/users?search=yahoo.com&page=1&limit=5
 ---
 
 ## 📄 Licencia

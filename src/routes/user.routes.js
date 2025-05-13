@@ -1,6 +1,5 @@
 import express from 'express';
-import { getUsers, createUser } from '../controllers/user.controller.js';
-import { validate } from '../middlewares/validate.js';
+import { getUsers } from '../controllers/user.controller.js';
 import Joi from 'joi';
 
 const router = express.Router();
