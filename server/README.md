@@ -72,7 +72,8 @@ npm start
 ## 🧪 Ejecutar seed
 
 ```bash
-node src/seed/seed-users.js
+node src/modules/parents/seed-parents.js
+node src/modules/users/seed-users.js
 ```
 
 Esto creara datos de usuarios para pruebas.
@@ -91,3 +92,12 @@ Ej: http://localhost:3000/api/users?search=yahoo.com&page=1&limit=5
 ## 📄 Licencia
 
 Este proyecto está bajo la licencia MIT.
+
+
+api-rest
+  client -> poner un package.json
+  server
+
+  comandos
+  snipet
+  eslint configurar, reglas, scripts en package
