@@ -5,4 +5,4 @@ const parentSchema = new mongoose.Schema({
   email: {type: String, required: true, unique: true}
 }, {timestamps: true});
 
-export const Parent = mongoose.model('Parent', parentSchema);
+export const Parents = mongoose.model('Parent', parentSchema);

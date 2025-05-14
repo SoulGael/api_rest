@@ -72,8 +72,8 @@ npm start
 ## 🧪 Ejecutar seed
 
 ```bash
-node src/modules/parents/seed-parents.js
-node src/modules/users/seed-users.js
+node src/modules/parents/parents-seed.js
+node src/modules/users/users-seed.js
 ```
 
 ## 🧪 Ejecutar eslint para verificar errores
