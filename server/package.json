@@ -3,7 +3,9 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
-    "test": "jest --runInBand"
+    "lint": "eslint . --ext .js",
+    "lint-nw": "npx eslint . --ext .js --quiet"
+    
   },
   "dependencies": {
     "@faker-js/faker": "^9.7.0",

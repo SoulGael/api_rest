@@ -1,6 +1,7 @@
-export const toCapitalCase = (str = '') =>
-  str
-    .toLowerCase()
-    .split(' ')
-    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(' ');
+export const toCapitalCase = (str = '') => {
+  return str
+  .toLowerCase()
+  .split(' ')
+  .map((value) => value.charAt(0).toUpperCase() + value.slice(1))
+  .join(' ');
+};
