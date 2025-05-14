@@ -11,8 +11,7 @@ console.log('📥 Insertando padres...');
 
 const parents = [];
 
-// eslint-disable-next-line id-length, no-plusplus
-for (let i = 0; i < 100; i++) {
+for (let limit = 0; limit < 100; limit += 1) {
   parents.push({
     name: faker.person.fullName(),
     email: faker.internet.email().toLowerCase()
