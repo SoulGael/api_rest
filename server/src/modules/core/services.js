@@ -7,8 +7,9 @@ export default (path, model) => {
         const page = parseInt(req.query.page, 10) || 1;
         const limit = parseInt(req.query.limit, 10) || 5;
         const skip = (page - 1) * limit;
-        delete req.query.page;
-        delete req.query.limit;
+
+        Reflect.deleteProperty(req.query, 'page');
+        Reflect.deleteProperty(req.query, 'limit');
         
         const result = await model.get(req.query, {skip: skip, limit: limit, page: page});
 
@@ -16,7 +17,6 @@ export default (path, model) => {
       } catch (err) {
         return res.json(error(path, err));
       }
-
     }
   };
 };

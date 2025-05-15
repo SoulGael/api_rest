@@ -9,7 +9,7 @@ export default (app) => {
 
       allowedFields.forEach((field) => {
         if (query[field]) {
-          filter[field] = { $regex: query[field], $options: 'i' };
+          filter[field] = {$regex: query[field], $options: 'i'};
         }
       });
       
