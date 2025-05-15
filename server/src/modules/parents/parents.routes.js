@@ -3,29 +3,28 @@ import {Parents} from './parents.model.js';
 
 export default (app) => {
   const model = {
-    get: async (query) => {
-      const page = parseInt(query.page, 10) || 1;
-      const limit = parseInt(query.limit, 10) || 10;
-      const skip = (page - 1) * limit;
-      const search = query.search?.toLowerCase() || '';
-  
-      const filter = {
-        $or: [
-          {name: {$regex: search, $options: 'i'}},
-          {email: {$regex: search, $options: 'i'}}
-        ]
-      };
-  
+    get: async (query, pagination) => {
+      const filter = {};
+      const allowedFields = ['name', 'email'];
+
+      allowedFields.forEach((field) => {
+        if (query[field]) {
+          filter[field] = { $regex: query[field], $options: 'i' };
+        }
+      });
+
       const [parents, total] = await Promise.all([
-        Parents.find(filter, 'name email createdAt updatedAt').skip(skip).limit(limit),
+        Parents.find(filter, 'name email createdAt updatedAt')
+        .skip(pagination.skip)
+        .limit(pagination.limit),
         Parents.countDocuments(filter)
       ]);
   
       return {
-        parents,
-        page,
-        totalPages: Math.ceil(total / limit),
-        total
+        page: pagination.page,
+        totalPages: Math.ceil(total / pagination.limit),
+        total,
+        parents
       };
     }
   };

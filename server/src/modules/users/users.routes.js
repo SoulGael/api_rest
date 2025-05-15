@@ -3,30 +3,26 @@ import {User} from './users.model.js';
 
 export default (app) => {
   const model = {
-    get: async (query) => {
-      const page = parseInt(query.page, 10) || 1;
-      const limit = parseInt(query.limit, 10) || 10;
-      const skip = (page - 1) * limit;
+    get: async (query, pagination) => {
+      const filter = {};
+      const allowedFields = ['name', 'email'];
 
-      const search = query.search?.toLowerCase() || '';
-
-      const filter = {
-        $or: [
-          {name: {$regex: search, $options: 'i'}},
-          {email: {$regex: search, $options: 'i'}}
-        ]
-      };
-
+      allowedFields.forEach((field) => {
+        if (query[field]) {
+          filter[field] = { $regex: query[field], $options: 'i' };
+        }
+      });
+      
       const [users, total] = await Promise.all([
         User.find(filter, 'name email createdAt updatedAt')
-        .skip(skip)
-        .limit(limit),
+        .skip(pagination.skip)
+        .limit(pagination.limit),
         User.countDocuments(filter)
       ]);
 
       return {
-        page,
-        totalPages: Math.ceil(total / limit),
+        page: pagination.page,
+        totalPages: Math.ceil(total / pagination.limit),
         total,
         users
       };
