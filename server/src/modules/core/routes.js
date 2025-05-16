@@ -8,6 +8,9 @@ export default (app, path, model) => {
       if (methods.get === true) {
         app.get(path, instanceServices.get);
       }
+      if (methods.post === true) {
+        app.post(path, instanceServices.post);
+      }
     }
   };
 };

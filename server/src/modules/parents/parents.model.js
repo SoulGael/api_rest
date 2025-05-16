@@ -2,8 +2,9 @@ import mongoose from 'mongoose';
 import model from '../core/model.js';
 
 const parentSchema = new mongoose.Schema({
-  name: {type: String, isSearchable: true},
-  email: {type: String}
+  complete_name: {type: String, isSearchable: true},
+  job: {type: String},
+  phone_number: {type: String}
 }, {collection: 'parents'});
 
 const mongooseModel = mongoose.model('parents', parentSchema);

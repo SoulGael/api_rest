@@ -18,9 +18,16 @@ export default (path, model) => {
 
         return res.json(success(path, result));
       } catch (err) {
-        console.log('🚀 ~ get: ~ err:', err);
-
         return res.json(error(path, err.error));
+      }
+    }, 
+    post: async (req, res) => {
+      try {
+        const result = await model.post(req.body);
+
+        return res.json(success(path, result));
+      } catch (err) {
+        return res.json(error(err, 500));
       }
     }
   };

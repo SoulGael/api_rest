@@ -1,5 +1,4 @@
 export default (mongooseModel) => {
-  // console.log('🚀 ~ get: ~ mongooseModel:', JSON.stringify(mongooseModel.schema.paths.name.options));
   return {
     get: async (filters, params) => {
       const filter = {};
@@ -22,6 +21,10 @@ export default (mongooseModel) => {
       .select(params.select);
 
       return data;
+    }, 
+    post: async (body) => {
+      const response = await mongooseModel.create(body);
+      return response;
     }
   }
 }

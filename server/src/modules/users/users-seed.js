@@ -2,10 +2,10 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import {faker} from '@faker-js/faker';
 
-import {User} from './user.model';
+import { MongooseParentModel } from './users.model.js';
+// export { mongooseModel as MongooseParentModel }; => agregar al final antes del export default 
 
 dotenv.config();
-
 await mongoose.connect(process.env.MONGODB_URI);
 
 console.log('📥 Insertando usuarios...');
@@ -18,7 +18,7 @@ for (let limit = 0; limit < 100; limit += 1) {
   });
 }
 
-await User.insertMany(users);
+await MongooseParentModel.insertMany(users);
 console.log('✅ Usuarios insertados con éxito');
 
 await mongoose.disconnect();
