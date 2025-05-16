@@ -1,4 +1,8 @@
-export default (mongooseModel) => {
+export default (mongooseModel, validator) => {
+  if (!validator) {
+    throw new Error('No tienen validador');
+  }
+  
   return {
     get: async (filters, params) => {
       const filter = {};
@@ -23,6 +27,15 @@ export default (mongooseModel) => {
       return data;
     }, 
     post: async (body) => {
+      for (const key in validator) {
+        const rules = validator[key];
+        const value = body[key];
+    
+        rules.forEach((validateFn) => {
+          validateFn(value, key);
+        });
+      }
+
       const response = await mongooseModel.create(body);
       return response;
     }

@@ -1,6 +1,10 @@
 import {success, error} from '../../utils/response.js';
 
-export default (path, model) => {
+export default (path, model, permissions) => {
+  // if (!permissions) {
+  //   throw new Error('No tienen validador');
+  // }
+
   return {
     get: async (req, res) => {
       try {
@@ -26,8 +30,8 @@ export default (path, model) => {
         const result = await model.post(req.body);
 
         return res.json(success(path, result));
-      } catch (err) {
-        return res.json(error(err, 500));
+        } catch (err) {
+        return res.json(error(err.message, 500));
       }
     }
   };

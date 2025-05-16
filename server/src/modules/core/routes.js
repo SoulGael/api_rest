@@ -1,7 +1,7 @@
 import services from './services.js';
 
-export default (app, path, model) => {
-  const instanceServices = services(path, model);
+export default (app, path, model, permissions) => {
+  const instanceServices = services(path, model, permissions);
 
   return {
     setup: (methods) => {
