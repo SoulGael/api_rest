@@ -1,8 +1,11 @@
 import mongoose from 'mongoose';
+import model from '../core/model.js';
 
 const parentSchema = new mongoose.Schema({
-  name: {type: String, required: true},
-  email: {type: String, required: true, unique: true}
-}, {timestamps: true});
+  name: {type: String, isSearchable: true},
+  email: {type: String}
+}, {collection: 'parents'});
 
-export const Parents = mongoose.model('Parent', parentSchema);
+const mongooseModel = mongoose.model('parents', parentSchema);
+const parentsModel = model(mongooseModel);
+export default parentsModel;

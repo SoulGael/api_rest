@@ -1,8 +1,12 @@
 import mongoose from 'mongoose';
+import model from '../core/model.js';
 
 const userSchema = new mongoose.Schema({
-  name: {type: String, required: true},
-  email: {type: String, required: true, unique: true}
-}, {timestamps: true});
+  name: {type: String, isSearchable: true},
+  email: {type: String}
+}, {collection: 'users'});
 
-export const User = mongoose.model('User', userSchema);
+const mongooseModel = mongoose.model('users', userSchema);
+const usersModel = model(mongooseModel);
+
+export default usersModel;
