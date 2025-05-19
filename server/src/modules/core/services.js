@@ -1,14 +1,12 @@
 import {success, error} from '../../utils/response.js';
 
 export default (path, model, permissions) => {
-  
   if (!permissions) {
-      throw new Error('No tienen validador');
-    }
+    throw new Error('No tienen validador');
+  }
     
-    return {
-      get: async (req, res) => {
-
+  return {
+    get: async (req, res) => {
       try {
         const page = parseInt(req.query.page, 10) || 1;
         const limit = parseInt(req.query.limit, 10) || 5;
@@ -52,7 +50,7 @@ export default (path, model, permissions) => {
         const result = await model.post(req.body);
 
         return res.json(success(path, result));
-        } catch (err) {
+      } catch (err) {
         return res.json(error(err.message, 500));
       }
     }

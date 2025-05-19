@@ -10,4 +10,5 @@ const parentSchema = new mongoose.Schema({
 
 const mongooseModel = mongoose.model('parents', parentSchema);
 const parentsModel = model(mongooseModel, parentsValidator);
+
 export default parentsModel;

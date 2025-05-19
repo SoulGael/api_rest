@@ -13,7 +13,7 @@ export default (mongooseModel, validator) => {
       
       for (const key in filters) {
         if (searchableFields.includes(key)) {
-          filter[key] = { $regex: filters[key], $options: 'i' };
+          filter[key] = {$regex: filters[key], $options: 'i'};
         } else {
           filter[key] = filters[key];
         }
@@ -37,7 +37,8 @@ export default (mongooseModel, validator) => {
       }
 
       const response = await mongooseModel.create(body);
+
       return response;
     }
-  }
-}
+  };
+};
