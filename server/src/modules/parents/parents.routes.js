@@ -7,6 +7,8 @@ export default (app) => {
 
   instanceRoutes.setup({
     get: true,
-    post: true
+    post: true,
+    put: true,
+    delete: true
   });
 };

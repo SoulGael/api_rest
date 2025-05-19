@@ -53,6 +53,42 @@ export default (path, model, permissions) => {
       } catch (err) {
         return res.json(error(err.message, 500));
       }
+    },
+    put: async (req, res) => {
+      try {
+        const allowedFields = permissions.put;
+        const incomingKeys = Object.keys(req.body);
+
+        const notAllowed = incomingKeys.filter((key) => !allowedFields.includes(key));
+
+        if (notAllowed.length > 0) {
+          throw new Error(`Campos no permitidos en PUT: ${notAllowed.join(', ')}`);
+        }
+
+        const result = await model.put(req.body);
+        
+        return res.json(success(path, result));
+      } catch (err) {
+        return res.json(error(err.message, 500));
+      }
+    },
+    delete: async (req, res) => {
+      try {
+        const allowedFields = permissions.delete;
+        const incomingKeys = Object.keys(req.body);
+
+        const notAllowed = incomingKeys.filter((key) => !allowedFields.includes(key));
+
+        if (notAllowed.length > 0) {
+          throw new Error(`Campos no permitidos en DELETE: ${notAllowed.join(', ')}`);
+        }
+
+        const result = await model.delete(req.body.id);
+        
+        return res.json(success(path, result));
+      } catch (err) {
+        return res.json(error(err.message, 500));
+      }
     }
   };
 };

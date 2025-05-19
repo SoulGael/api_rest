@@ -1,4 +1,6 @@
 export default {
-  get: ['name'],
-  post: ['name', 'email']
+  get: ['name', 'email'],
+  post: ['name', 'email'],
+  put: ['id','name', 'email'],
+  delete: ['id']
 };

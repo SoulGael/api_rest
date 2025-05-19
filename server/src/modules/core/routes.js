@@ -11,6 +11,12 @@ export default (app, path, model, permissions) => {
       if (methods.post === true) {
         app.post(path, instanceServices.post);
       }
+      if (methods.put === true) {
+        app.put(path, instanceServices.put);
+      }
+      if (methods.delete === true) {
+        app.delete(path, instanceServices.delete);
+      }
     }
   };
 };
