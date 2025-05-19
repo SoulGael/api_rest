@@ -74,6 +74,8 @@ npm start
 ```bash
 node src/modules/parents/parents-seed.js
 node src/modules/users/users-seed.js
+
+Agregar export { mongooseModel as MongooseParentModel }; antes del 'export default' de cada model de lo que necesites hacer seeds
 ```
 
 ## 🧪 Ejecutar eslint para verificar errores

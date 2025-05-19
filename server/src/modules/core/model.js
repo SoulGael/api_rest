@@ -8,7 +8,7 @@ export default (mongooseModel, validator) => {
       const filter = {};
 
       const searchableFields = Object.entries(mongooseModel.schema.paths)
-      .filter(([_, val]) => val.options?.isSearchable)
+      .filter(([, val]) => val.options?.isSearchable)
       .map(([key]) => key);
       
       for (const key in filters) {
@@ -27,14 +27,14 @@ export default (mongooseModel, validator) => {
       return data;
     }, 
     post: async (body) => {
-      for (const key in validator) {
+      Object.entries(validator).forEach(([key]) => {
         const rules = validator[key];
         const value = body[key];
     
         rules.forEach((validateFn) => {
           validateFn(value, key);
         });
-      }
+      });
 
       const response = await mongooseModel.create(body);
 

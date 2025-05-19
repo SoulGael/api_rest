@@ -17,7 +17,7 @@ export default (path, model, permissions) => {
 
         const allowedFields = permissions.get;
 
-        const notAllowed = incomingFields.filter(field => !allowedFields.includes(field));
+        const notAllowed = incomingFields.filter((field) => !allowedFields.includes(field));
 
         if (notAllowed.length > 0) {
           throw new Error(`Campos no permitidos en GET: ${notAllowed.join(', ')}`);
@@ -41,14 +41,14 @@ export default (path, model, permissions) => {
         const allowedFields = permissions.post;
         const incomingKeys = Object.keys(req.body);
 
-        const notAllowed = incomingKeys.filter(key => !allowedFields.includes(key));
+        const notAllowed = incomingKeys.filter((key) => !allowedFields.includes(key));
 
         if (notAllowed.length > 0) {
           throw new Error(`Campos no permitidos en POST: ${notAllowed.join(', ')}`);
         }
 
         const result = await model.post(req.body);
-
+        
         return res.json(success(path, result));
       } catch (err) {
         return res.json(error(err.message, 500));

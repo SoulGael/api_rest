@@ -10,11 +10,11 @@ console.log('📥 Insertando padres...');
 
 const parents = [];
 
-for (let i = 0; i < 100; i++) {
+for (let limit = 0; limit < 100; limit += 1) {
   parents.push({
-    complete_name: faker.person.fullName(),
+    completeName: faker.person.fullName(),
     job: faker.person.jobTitle(),
-    phone_number: faker.phone.number()
+    phoneNumber: faker.phone.number()
   });
 }
 
