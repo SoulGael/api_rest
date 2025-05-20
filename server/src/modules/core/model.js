@@ -4,7 +4,7 @@ export default (mongooseModel, validator) => {
   }
   
   return {
-    get: async (filters, params) => {
+    get: async (filters, params = {}) => {
       const filter = {};
 
       const searchableFields = Object.entries(mongooseModel.schema.paths)
