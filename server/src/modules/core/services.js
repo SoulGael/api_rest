@@ -11,7 +11,7 @@ export default (path, model, modulePermissions) => {
         const limit = parseInt(req.query.limit, 10) || 5;
         const select = req.query.select;
         
-        const fields = select.trim().split(/\s+/);
+        const fields = select ? select.trim().split(/\s+/) : '';
 
         instancePermissions(fields, 'get');
         
@@ -33,7 +33,7 @@ export default (path, model, modulePermissions) => {
         const body = req.body;
 
         const fields = Object.keys(body);
-        validateSelectedFields(fields, modulePermissions.post, 'POST');
+        instancePermissions(fields, 'post');
 
         const result = await model.post(body);
         
@@ -47,7 +47,7 @@ export default (path, model, modulePermissions) => {
         const body = req.body;
 
         const fields = Object.keys(body);
-        validateSelectedFields(fields, permissions.put, 'PUT');
+        instancePermissions(fields, 'put');
 
         const result = await model.put(body);
         
@@ -61,7 +61,7 @@ export default (path, model, modulePermissions) => {
         const body = req.body;
 
         const fields = Object.keys(body);
-        validateSelectedFields(fields, 'delete');
+        instancePermissions(fields, 'delete');
 
         const result = await model.delete(body.id);
         
