@@ -1,10 +1,9 @@
 import {success, error} from '../../utils/response.js';
+import permissions from './permissions.js';
 
-export default (path, model, permissions) => {
-  if (!permissions) {
-    throw new Error('No tienen validador');
-  }
-    
+export default (path, model, modulePermissions) => {
+  const instancePermissions = permissions(modulePermissions);
+
   return {
     get: async (req, res) => {
       try {
@@ -12,16 +11,9 @@ export default (path, model, permissions) => {
         const limit = parseInt(req.query.limit, 10) || 5;
         const select = req.query.select;
         
-        const incomingFieldsRaw = select;
-        const incomingFields = incomingFieldsRaw.trim().split(/\s+/);
+        const fields = select.trim().split(/\s+/);
 
-        const allowedFields = permissions.get;
-
-        const notAllowed = incomingFields.filter((field) => !allowedFields.includes(field));
-
-        if (notAllowed.length > 0) {
-          throw new Error(`Campos no permitidos en GET: ${notAllowed.join(', ')}`);
-        }
+        instancePermissions(fields, 'get');
         
         const skip = (page - 1) * limit;
 
@@ -38,16 +30,12 @@ export default (path, model, permissions) => {
     }, 
     post: async (req, res) => {
       try {
-        const allowedFields = permissions.post;
-        const incomingKeys = Object.keys(req.body);
+        const body = req.body;
 
-        const notAllowed = incomingKeys.filter((key) => !allowedFields.includes(key));
+        const fields = Object.keys(body);
+        validateSelectedFields(fields, modulePermissions.post, 'POST');
 
-        if (notAllowed.length > 0) {
-          throw new Error(`Campos no permitidos en POST: ${notAllowed.join(', ')}`);
-        }
-
-        const result = await model.post(req.body);
+        const result = await model.post(body);
         
         return res.json(success(path, result));
       } catch (err) {
@@ -56,16 +44,12 @@ export default (path, model, permissions) => {
     },
     put: async (req, res) => {
       try {
-        const allowedFields = permissions.put;
-        const incomingKeys = Object.keys(req.body);
+        const body = req.body;
 
-        const notAllowed = incomingKeys.filter((key) => !allowedFields.includes(key));
+        const fields = Object.keys(body);
+        validateSelectedFields(fields, permissions.put, 'PUT');
 
-        if (notAllowed.length > 0) {
-          throw new Error(`Campos no permitidos en PUT: ${notAllowed.join(', ')}`);
-        }
-
-        const result = await model.put(req.body);
+        const result = await model.put(body);
         
         return res.json(success(path, result));
       } catch (err) {
@@ -74,16 +58,12 @@ export default (path, model, permissions) => {
     },
     delete: async (req, res) => {
       try {
-        const allowedFields = permissions.delete;
-        const incomingKeys = Object.keys(req.body);
+        const body = req.body;
 
-        const notAllowed = incomingKeys.filter((key) => !allowedFields.includes(key));
+        const fields = Object.keys(body);
+        validateSelectedFields(fields, 'delete');
 
-        if (notAllowed.length > 0) {
-          throw new Error(`Campos no permitidos en DELETE: ${notAllowed.join(', ')}`);
-        }
-
-        const result = await model.delete(req.body.id);
+        const result = await model.delete(body.id);
         
         return res.json(success(path, result));
       } catch (err) {
