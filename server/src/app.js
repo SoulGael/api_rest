@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import {connectDB} from './config/db.js';
 import {errorHandler} from './middlewares/errorHandler.js';
+import jwtAuth from './middlewares/jwtAuth.js';
 // importar todos los modulos js de las carpetas modulesˇ
 import usersModule from './modules/users/module.js';
 import parentsModule from './modules/parents/module.js';
@@ -13,6 +14,8 @@ const app = express();
 app.use(express.json());
 
 connectDB();
+
+app.use(jwtAuth());
 
 usersModule(app);
 parentsModule(app);

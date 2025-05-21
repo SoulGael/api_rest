@@ -1,7 +1,7 @@
-export default (mongooseModel, validator) => {
-  if (!validator) {
-    throw new Error('No tienen validador');
-  }
+import validators from './validators.js';
+
+export default (mongooseModel, moduleValidator) => {
+  const instanceValidators = validators(moduleValidator);
   
   return {
     get: async (filters, params = {}) => {
@@ -27,28 +27,14 @@ export default (mongooseModel, validator) => {
       return data;
     }, 
     post: async (body) => {
-      Object.entries(validator).forEach(([key]) => {
-        const rules = validator[key];
-        const value = body[key];
-    
-        rules.forEach((validateFn) => {
-          validateFn(value, key);
-        });
-      });
+      instanceValidators(body);
 
       const response = await mongooseModel.create(body);
 
       return response;
     },
     put: async (body) => {
-      Object.entries(validator).forEach(([key]) => {
-        const rules = validator[key];
-        const value = body[key];
-
-        rules.forEach((validateFn) => {
-          validateFn(value, key);
-        });
-      });
+      instanceValidators(body);
 
       const response = await mongooseModel.findByIdAndUpdate(body.id, body, {
         new: true,

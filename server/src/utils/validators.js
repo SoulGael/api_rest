@@ -6,6 +6,8 @@ export default () => ({
   },
   
   minLength: (expectedLength) => (value, field) => {
+    console.log('🚀 ~ value, field:', value, field);
+
     if (value.length < expectedLength) {
       throw new Error(`${field} debe tener al menos ${expectedLength} caracteres`);
     }

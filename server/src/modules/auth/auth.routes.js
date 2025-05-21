@@ -9,7 +9,6 @@ export default (app) => {
     const {email, password} = req.body;
     const hashPassword = crypto.createHash('sha256').update(password).digest('hex');
     const users = await usersModel.get({email: email, password: hashPassword});
-    console.log('🚀 ~ app.post ~ users:', users);
 
     if(users.length > 0){
       const token = crypto.randomBytes(32).toString('hex');
