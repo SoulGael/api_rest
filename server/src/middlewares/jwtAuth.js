@@ -5,7 +5,8 @@ import usersModel from '../modules/users/users.model.js';
 export default () => {
   return async (req, res, next) => {
     try {
-      if(req.path == '/api/login'){
+      const pathRequest = req.path;
+      if(pathRequest == '/api/login'){
         return next();
       }
       
@@ -15,7 +16,19 @@ export default () => {
       const record = await authModel.get({token: token});
   
       const users = await usersModel.get({_id: record[0].user});
+      
+      const allowedRoutes = users[0].routes;
+      const allowed = allowedRoutes.some((route) => pathRequest.includes(`/api/${route}`));
+
+      if (!allowed) {
+        return res.status(403).json({
+          success: false,
+          message: 'No tienes permisos suficientes para acceder a esta ruta'
+        });
+      }
+      
       req.user = users[0];
+
   
       return next();
     } catch (err) {
