@@ -17,7 +17,8 @@ for (let limit = 0; limit < 100; limit += 1) {
   users.push({
     name: faker.person.fullName(),
     email: faker.internet.email().toLowerCase(),
-    password: hashPassword
+    password: hashPassword,
+    routes: ['users', 'parents']
   });
 }
 

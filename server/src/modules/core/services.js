@@ -13,7 +13,7 @@ export default (path, model, modulePermissions) => {
         
         const fields = select ? select.trim().split(/\s+/) : '';
 
-        instancePermissions(fields, 'get');
+        const selectQuery = instancePermissions(fields, 'get');
         
         const skip = (page - 1) * limit;
 
@@ -21,7 +21,7 @@ export default (path, model, modulePermissions) => {
         Reflect.deleteProperty(req.query, 'limit');
         Reflect.deleteProperty(req.query, 'select');
         
-        const result = await model.get(req.query, {skip: skip, limit: limit, page: page, select: select});
+        const result = await model.get(req.query, {skip: skip, limit: limit, page: page, select: selectQuery});
 
         return res.json(success(path, result));
       } catch (err) {
@@ -63,7 +63,7 @@ export default (path, model, modulePermissions) => {
         const fields = Object.keys(body);
         instancePermissions(fields, 'delete');
 
-        const result = await model.delete(body.id);
+        const result = await model.delete(body._id);
         
         return res.json(success(path, result));
       } catch (err) {

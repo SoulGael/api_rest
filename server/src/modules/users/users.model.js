@@ -5,7 +5,8 @@ import usersValidator from './users.validator.js';
 const userSchema = new mongoose.Schema({
   name: {type: String, isSearchable: true},
   email: {type: String},
-  password: {type: String}
+  password: {type: String},
+  routes: [String]
 }, {collection: 'users'});
 
 const mongooseModel = mongoose.model('users', userSchema);
