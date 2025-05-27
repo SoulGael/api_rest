@@ -36,13 +36,13 @@ export default (mongooseModel, moduleValidator) => {
     put: async (body) => {
       instanceValidators(body);
 
-      const response = await mongooseModel.findByIdAndUpdate(body.id, body, {
+      const response = await mongooseModel.findByIdAndUpdate(body._id, body, {
         new: true,
         runValidators: true
       });
 
       if (!response) {
-        throw new Error(`No se encontró el registro con id ${id}`);
+        throw new Error(`No se encontró el registro con id ${body._id}`);
       }
 
       return response;

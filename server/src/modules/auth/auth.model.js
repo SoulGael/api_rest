@@ -4,7 +4,8 @@ import authValidator from './auth.validator.js';
 
 const authSchema = new mongoose.Schema({
   user: {type: mongoose.Types.ObjectId},
-  token: {type: String}
+  token: {type: String},
+  expiresAt: {type: String},
 }, {collection: 'auth'});
 
 const mongooseModel = mongoose.model('auth', authSchema);

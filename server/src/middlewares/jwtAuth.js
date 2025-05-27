@@ -13,10 +13,15 @@ export default () => {
       const authHeader = req.get('Authorization');
 
       const token = authHeader.split(' ')[1];
+      
       const record = await authModel.get({token: token});
   
-      const users = await usersModel.get({_id: record[0].user});
+      if (new Date() > new Date(record[0].expiresAt)) {
+        return res.status(401).json({ success: false, message: 'Token expirado' });
+      }
       
+      const users = await usersModel.get({_id: record[0].user});
+
       const allowedRoutes = users[0].routes;
       const allowed = allowedRoutes.some((route) => pathRequest.includes(`/api/${route}`));
 
