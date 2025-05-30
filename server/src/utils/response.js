@@ -1,7 +1,7 @@
-export const success = (message, data = {}) => ({
+export const success = (message, payload = {}) => ({
   success: true,
   message,
-  data
+  payload
 });
 
 export const error = (message, code = 500) => ({

@@ -1,4 +1,4 @@
-
+import {success, error} from '../../utils/response.js';
 import crypto from 'crypto';
 
 import usersModel from '../users/users.model.js';
@@ -9,7 +9,8 @@ export default (app) => {
     try {
       const {email, password} = req.body;
       const hashPassword = crypto.createHash('sha256').update(password).digest('hex');
-      const users = await usersModel.get({email: email, password: hashPassword});
+      const response = await usersModel.get({email: email, password: hashPassword});
+      const users = response.data;
   
       if(users.length > 0){
         const token = crypto.randomBytes(32).toString('hex');
@@ -23,21 +24,12 @@ export default (app) => {
           expiresAt: expiresAt
         });
   
-        return res.json({
-          response: auth,
-          errors: []
-        })
+        return res.json(success('ok', auth))
       }
   
-      return res.json({
-        response: [],
-        errors: ['Por favor verifique las credenciales']
-      })
+      return res.json(error('Por favor verifique las credenciales'));
     } catch (err) {
-      return res.json({
-        response: [],
-        errors: ['Algo sucedió en el servidor', err.message]
-      })
+      return res.json(error(`Algo sucedió en el servidor', ${err.message}`));
     }
   })
 };

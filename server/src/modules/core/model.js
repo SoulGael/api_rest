@@ -24,7 +24,20 @@ export default (mongooseModel, moduleValidator) => {
       .limit(params.limit)
       .select(params.select);
 
-      return data;
+      const totalDataCount = await mongooseModel.countDocuments(filter);
+      const totalPages = Math.ceil(totalDataCount / params.limit);
+
+      const result = {
+        data: data,
+        pagination: {
+          page: params.page,
+          limit: params.limit,
+          total: totalDataCount,
+          totalPages: totalPages
+        }
+      }
+
+      return result;
     }, 
     post: async (body) => {
       instanceValidators(body);

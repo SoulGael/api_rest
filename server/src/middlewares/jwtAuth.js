@@ -14,13 +14,15 @@ export default () => {
 
       const token = authHeader.split(' ')[1];
       
-      const record = await authModel.get({token: token});
+      const responseAuth = await authModel.get({token: token});
+      const record = responseAuth.data;
   
       if (new Date() > new Date(record[0].expiresAt)) {
         return res.status(401).json({ success: false, message: 'Token expirado' });
       }
       
-      const users = await usersModel.get({_id: record[0].user});
+      const responseUsers = await usersModel.get({_id: record[0].user});
+      const users = responseUsers.data;
 
       const allowedRoutes = users[0].routes;
       const allowed = allowedRoutes.some((route) => pathRequest.includes(`/api/${route}`));
@@ -33,7 +35,6 @@ export default () => {
       }
       
       req.user = users[0];
-
   
       return next();
     } catch (err) {
